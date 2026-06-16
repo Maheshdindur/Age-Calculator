@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --bg: #f9fafb;
+            --card: #ffffff;
+            --text: #111827;
+        }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 2rem; max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; color: var(--primary); }
+        .card { background: var(--card); padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 2rem; }
+        form { display: grid; gap: 1rem; }
+        input { padding: 0.5rem; border: 1px solid #d1d5db; border-radius: 4px; }
+        button { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
+        button:hover { opacity: 0.9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #e5e7eb; }
+        th { background: #f3f4f6; }
+        .delete-btn { background: #ef4444; padding: 0.25rem 0.5rem; font-size: 0.875rem; }
+    </style>
+</head>
+<body>
+    <h1>User Management</h1>
+    
+    <div class="card">
+        <h3>Add New User</h3>
+        <form id="userForm">
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="date" id="dob" required>
+            <button type="submit">Create User</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h3>User List</h3>
+        <table id="userTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>DOB</th>
+                    <th>Age</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const API_URL = '/users';
+
+        // Load users on startup
+        fetchUsers();
+
+        document.getElementById('userForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const dob = document.getElementById('dob').value;
+
+            const res = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, dob })
+            });
+
+            if (res.ok) {
+                document.getElementById('userForm').reset();
+                fetchUsers();
+            } else {
+                alert('Error creating user');
+            }
+        });
+
+        async function fetchUsers() {
+            const res = await fetch(API_URL);
+            const users = await res.json();
+            const tbody = document.querySelector('#userTable tbody');
+            tbody.innerHTML = '';
+
+            users.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.dob}</td>
+                    <td>${user.age}</td>
+                    <td><button class="delete-btn" onclick="deleteUser(${user.id})">Delete</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function deleteUser(id) {
+            if (confirm('Are you sure?')) {
+                await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                fetchUsers();
+            }
+        }
+    </script>
+</body>
+</html>
