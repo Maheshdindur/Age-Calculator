@@ -5,5 +5,3 @@ obj/
 *.exe
 *.test
 vendor/
-sqlc
-main
