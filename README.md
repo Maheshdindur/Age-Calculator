@@ -81,13 +81,5 @@ Open your browser to: **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
-## 👨‍💻 Evaluation Highlights
-For the technical interview, focus on these three areas:
-1. **Service Layer Logic**: See `internal/service/user_service.go` for the detailed age calculation algorithm.
-2. **SQLC Integration**: Explain how we use code generation for type-safe database access.
-3. **Middleware Implementation**: Discuss how we use custom middleware for logging and request tracking.
-
----
-
-## 📦 Deployment (Optional)
-This app is ready for deployment on **Render** (Compute) and **Neon** (Database). A `Dockerfile` is included for containerized environments like **Google Cloud Run**.
+## 📦 Deployment 
+This app is deployed on **Google Cloud Platform**. Click on the link to calculate your age : **[https://age-calculator-703761824443.us-central1.run.app/](https://age-calculator-703761824443.us-central1.run.app/)**
