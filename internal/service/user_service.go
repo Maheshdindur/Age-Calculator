@@ -33,6 +33,10 @@ func (s *userService) CreateUser(ctx context.Context, req models.UserRequest) (m
 		return models.UserResponse{}, err
 	}
 
+	if dob.After(time.Now()) {
+		return models.UserResponse{}, fmt.Errorf("date of birth cannot be in the future")
+	}
+
 	user, err := s.repo.CreateUser(ctx, db.CreateUserParams{
 		Name: req.Name,
 		Dob:  pgtype.Date{Time: dob, Valid: true},
@@ -45,6 +49,7 @@ func (s *userService) CreateUser(ctx context.Context, req models.UserRequest) (m
 		ID:   user.ID,
 		Name: user.Name,
 		DOB:  user.Dob.Time.Format("2006-01-02"),
+		Age:  CalculateAge(user.Dob.Time),
 	}, nil
 }
 
@@ -68,6 +73,10 @@ func (s *userService) UpdateUser(ctx context.Context, id int32, req models.UserR
 		return models.UserResponse{}, err
 	}
 
+	if dob.After(time.Now()) {
+		return models.UserResponse{}, fmt.Errorf("date of birth cannot be in the future")
+	}
+
 	user, err := s.repo.UpdateUser(ctx, db.UpdateUserParams{
 		ID:   id,
 		Name: req.Name,
@@ -81,6 +90,7 @@ func (s *userService) UpdateUser(ctx context.Context, id int32, req models.UserR
 		ID:   user.ID,
 		Name: user.Name,
 		DOB:  user.Dob.Time.Format("2006-01-02"),
+		Age:  CalculateAge(user.Dob.Time),
 	}, nil
 }
 
