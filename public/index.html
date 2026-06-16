@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Management</title>
+    <title>Age Calculator</title>
     <style>
         :root {
             --primary: #4f46e5;
@@ -20,31 +20,35 @@
         button { background: var(--primary); color: white; border: none; padding: 0.75rem; border-radius: 4px; cursor: pointer; font-weight: 600; }
         button:hover { opacity: 0.9; }
         .cancel-btn { background: #6b7280; }
+        .toggle-btn { background: #4f46e5; margin-bottom: 1rem; width: 100%; }
         table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
         th, td { text-align: left; padding: 0.75rem; border-bottom: 1px solid #e5e7eb; }
         th { background: #f3f4f6; }
         .edit-btn { background: #10b981; padding: 0.25rem 0.5rem; font-size: 0.875rem; }
         .delete-btn { background: #ef4444; padding: 0.25rem 0.5rem; font-size: 0.875rem; }
+        #userListCard { display: none; }
     </style>
 </head>
 <body>
-    <h1>User Management</h1>
+    <h1>Age Calculator</h1>
     
     <div class="card">
-        <h3 id="formTitle">Add New User</h3>
+        <h3 id="formTitle">Enter Details</h3>
         <form id="userForm">
             <input type="hidden" id="userId">
             <input type="text" id="name" placeholder="Full Name" required>
             <input type="date" id="dob" required>
             <div class="btn-group">
-                <button type="submit" id="submitBtn">Create User</button>
+                <button type="submit" id="submitBtn">Calculate Age</button>
                 <button type="button" id="cancelBtn" class="cancel-btn" style="display: none;">Cancel</button>
             </div>
         </form>
     </div>
 
-    <div class="card">
-        <h3>User List</h3>
+    <button id="toggleListBtn" class="toggle-btn">Show Saved Calculations</button>
+
+    <div class="card" id="userListCard">
+        <h3>Saved Calculations</h3>
         <table id="userTable">
             <thead>
                 <tr>
@@ -62,6 +66,7 @@
     <script>
         const API_URL = '/users';
         let isEditing = false;
+        let listVisible = false;
 
         // Load users on startup
         fetchUsers();
@@ -71,6 +76,14 @@
         const submitBtn = document.getElementById('submitBtn');
         const cancelBtn = document.getElementById('cancelBtn');
         const userIdInput = document.getElementById('userId');
+        const userListCard = document.getElementById('userListCard');
+        const toggleListBtn = document.getElementById('toggleListBtn');
+
+        toggleListBtn.addEventListener('click', () => {
+            listVisible = !listVisible;
+            userListCard.style.display = listVisible ? 'block' : 'none';
+            toggleListBtn.innerText = listVisible ? 'Hide Saved Calculations' : 'Show Saved Calculations';
+        });
 
         userForm.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -90,6 +103,10 @@
             if (res.ok) {
                 resetForm();
                 fetchUsers();
+                // If we just added a user, show the list
+                if (!isEditing && !listVisible) {
+                    toggleListBtn.click();
+                }
             } else {
                 alert('Error processing request');
             }
@@ -121,8 +138,8 @@
 
         function editUser(id, name, dob) {
             isEditing = true;
-            formTitle.innerText = 'Edit User';
-            submitBtn.innerText = 'Update User';
+            formTitle.innerText = 'Edit Calculation';
+            submitBtn.innerText = 'Update Age';
             cancelBtn.style.display = 'block';
             
             userIdInput.value = id;
@@ -134,8 +151,8 @@
 
         function resetForm() {
             isEditing = false;
-            formTitle.innerText = 'Add New User';
-            submitBtn.innerText = 'Create User';
+            formTitle.innerText = 'Enter Details';
+            submitBtn.innerText = 'Calculate Age';
             cancelBtn.style.display = 'none';
             userForm.reset();
             userIdInput.value = '';
@@ -144,7 +161,7 @@
         cancelBtn.addEventListener('click', resetForm);
 
         async function deleteUser(id) {
-            if (confirm('Are you sure you want to delete this user?')) {
+            if (confirm('Are you sure you want to delete this calculation?')) {
                 await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
                 fetchUsers();
             }
