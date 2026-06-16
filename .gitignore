@@ -6,3 +6,4 @@ obj/
 *.test
 vendor/
 sqlc
+main
