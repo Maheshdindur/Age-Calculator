@@ -1,0 +1,20 @@
+name: Argus PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  argus-review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Argus
+        uses: Maheshdindur/Argus-The-Serverless-Code-Guardian@v1
+        with:
+          groq_api_key: ${{ secrets.GROQ_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
