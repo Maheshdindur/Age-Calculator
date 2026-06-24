@@ -1,83 +1,208 @@
-# 🎂 Age Calculator API & Frontend 🚀
+# 🎂 Age Calculator - Production Ready Full Stack Go Application
 
-A professional, full-stack User Management system built with **Go** that calculates precise human age in **Years, Months, and Days**. This project demonstrates clean architecture, database safety, and a responsive user interface.
+A production-ready full-stack web application built with **Go**, **Fiber**, **PostgreSQL**, and **SQLC** that calculates a person's exact age in **Years, Months, and Days** while demonstrating modern backend engineering practices such as clean architecture, request tracing, structured logging, validation, and secure database operations.
 
----
+## 🌐 Live Demo
 
-## 🛠️ Features
-- **Accurate Age Logic**: Dynamically calculates age down to the day, handling varying month lengths and leap years.
-- **Full CRUD**: Create, Read, Update, and Delete users through a modern web UI.
-- **Data Integrity**: Prevents future dates from being stored and validates all inputs.
-- **Observability**: Structured JSON logging (Uber Zap) and unique Request IDs for every transaction.
-- **Secure**: Uses parameterized SQL queries to prevent SQL Injection attacks.
+🚀 **Live Application:** https://age-calculator-703761824443.us-central1.run.app/
+
+📂 **Source Code:** https://github.com/Maheshdindur/Age-Calculator
 
 ---
 
-## 🏗️ Project Architecture
-The project follows a **Layered (Clean) Architecture** to ensure maintainability:
-- **`cmd/server/`**: Application entry point and dependency injection.
-- **`internal/handler/`**: HTTP layer (GoFiber) – handles requests and responses.
-- **`internal/service/`**: Business logic layer – handles the complex age calculations.
-- **`internal/repository/`**: Data access layer – communicates with PostgreSQL.
-- **`db/sqlc/`**: Type-safe database code generated from raw SQL.
-- **`public/`**: Frontend assets (HTML/CSS/JS).
+## ⭐ Highlights
+
+- Built using Go, Fiber, PostgreSQL, SQLC, and Uber Zap
+- Implemented Clean Architecture with clear separation of concerns
+- Developed full CRUD REST APIs
+- Added structured logging and request tracing
+- Implemented request validation and centralized error handling
+- Protected database operations using parameterized SQL queries
+- Deployed on Google Cloud Run
+- Responsive frontend using HTML, CSS, and JavaScript
+
+---
+
+## 📖 Overview
+
+Many age calculator applications focus only on age computation.
+
+This project was designed to demonstrate how a real-world backend service should be structured and deployed using modern engineering practices.
+
+The application allows users to:
+
+- Create age records
+- View stored calculations
+- Update user information
+- Delete records
+- Calculate age accurately in Years, Months, and Days
+
+while maintaining production-quality standards such as:
+
+- Clean Architecture
+- Type-safe database access
+- Request tracing
+- Structured logging
+- Validation
+- Cloud deployment
+
+---
+
+## ✨ Features
+
+### 🎯 Accurate Age Calculation
+
+- Calculates age precisely in Years, Months, and Days
+- Handles leap years
+- Handles varying month lengths
+- Prevents future dates
+- Validates user input
+
+### 👤 User Management (CRUD)
+
+- Create users
+- View saved calculations
+- Update user information
+- Delete users
+
+### 🔒 Secure Backend
+
+- Parameterized SQL Queries
+- SQL Injection Protection
+- Input Validation
+- Centralized Error Handling
+
+### 📊 Observability
+
+- Structured JSON Logging
+- Unique Request IDs
+- Request Tracking
+- Error Logging
+
+### 🎨 Responsive Frontend
+
+- Clean User Interface
+- Mobile Responsive Design
+- Dynamic API Integration
+
+---
+
+## 🏗️ Architecture
+
+```text
+├── cmd
+│   └── server
+│       └── main.go
+│
+├── internal
+│   ├── handler
+│   ├── service
+│   ├── repository
+│   ├── middleware
+│   └── logger
+│
+├── db
+│   ├── migrations
+│   ├── query
+│   └── sqlc
+│
+├── public
+│
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+## 🔄 Request Flow
+
+```text
+Client Request
+      ↓
+Fiber Router
+      ↓
+Middleware
+(Request ID, Logging, Validation)
+      ↓
+Handler Layer
+      ↓
+Service Layer
+(Age Calculation Logic)
+      ↓
+Repository Layer
+      ↓
+SQLC Generated Queries
+      ↓
+PostgreSQL Database
+      ↓
+JSON Response
+```
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+
+- Go 1.22+
+- Fiber
+- PostgreSQL
+- SQLC
+- Uber Zap
+- Validator
+
+### Frontend
+
+- HTML
+- CSS
+- JavaScript
+
+### DevOps & Cloud
+
+- Docker
+- Google Cloud Run
+- GitHub
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Prerequisites
-- **Go** (v1.22 or higher)
-- **PostgreSQL** (Running locally or in the cloud)
-- **Git**
+### Clone Repository
 
-### 2. Database Setup
-1. Create a database named `user_db` in your PostgreSQL instance.
-2. Run the migration script to create the `users` table:
-   ```sql
-   -- Path: db/migrations/000001_create_users_table.up.sql
-   CREATE TABLE users (
-       id SERIAL PRIMARY KEY,
-       name TEXT NOT NULL,
-       dob DATE NOT NULL
-   );
-   ```
+```bash
+git clone https://github.com/Maheshdindur/Age-Calculator.git
+cd Age-Calculator
+```
 
-### 3. Installation & Configuration
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Maheshdindur/Age-Calculator.git
-   cd Age-Calculator
-   ```
-2. **Install dependencies**:
-   ```bash
-   go mod tidy
-   ```
-3. **Set up Environment Variables**:
-   Create a `.env` file in the root directory:
-   ```env
-   DATABASE_URL=postgres://your_username:your_password@localhost:5432/user_db?sslmode=disable
-   SERVER_PORT=3000
-   ```
+### Install Dependencies
 
-### 4. Running the Application
-Start the server:
+```bash
+go mod tidy
+```
+
+### Configure Environment Variables
+
+```env
+DATABASE_URL=postgres://username:password@localhost:5432/user_db?sslmode=disable
+SERVER_PORT=3000
+```
+
+### Run Application
+
 ```bash
 go run cmd/server/main.go
 ```
-Open your browser to: **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
-## 🧪 API Endpoints
+## 📡 API Endpoints
 
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| `POST` | `/users` | Create a user & calculate age |
-| `GET` | `/users/:id` | Get specific user details |
-| `PUT` | `/users/:id` | Update user details |
-| `DELETE` | `/users/:id` | Remove a user |
-| `GET` | `/users` | List all saved calculations |
+|----------|----------|-------------|
+| POST | /users | Create User |
+| GET | /users | Get All Users |
+| GET | /users/:id | Get User By ID |
+| PUT | /users/:id | Update User |
+| DELETE | /users/:id | Delete User |
 
 ---
 
