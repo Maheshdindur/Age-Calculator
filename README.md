@@ -4,9 +4,47 @@ A production-ready full-stack web application built with **Go**, **Fiber**, **Po
 
 ## 🌐 Live Demo
 
-**Application:** https://age-calculator-703761824443.us-central1.run.app/
+🚀 **Live Application:** https://age-calculator-703761824443.us-central1.run.app/
 
-**Source Code:** https://github.com/Maheshdindur/Age-Calculator
+📂 **Source Code:** https://github.com/Maheshdindur/Age-Calculator
+
+---
+
+## ⭐ Highlights
+
+- Built using Go, Fiber, PostgreSQL, SQLC, and Uber Zap
+- Implemented Clean Architecture with clear separation of concerns
+- Developed full CRUD REST APIs
+- Added structured logging and request tracing
+- Implemented request validation and centralized error handling
+- Protected database operations using parameterized SQL queries
+- Deployed on Google Cloud Run
+- Responsive frontend using HTML, CSS, and JavaScript
+
+---
+
+## 📖 Overview
+
+Many age calculator applications focus only on age computation.
+
+This project was designed to demonstrate how a real-world backend service should be structured and deployed using modern engineering practices.
+
+The application allows users to:
+
+- Create age records
+- View stored calculations
+- Update user information
+- Delete records
+- Calculate age accurately in Years, Months, and Days
+
+while maintaining production-quality standards such as:
+
+- Clean Architecture
+- Type-safe database access
+- Request tracing
+- Structured logging
+- Validation
+- Cloud deployment
 
 ---
 
@@ -29,17 +67,23 @@ A production-ready full-stack web application built with **Go**, **Fiber**, **Po
 
 ### 🔒 Secure Backend
 
-- Parameterized SQL queries
-- SQL injection protection
-- Input validation
-- Centralized error handling
+- Parameterized SQL Queries
+- SQL Injection Protection
+- Input Validation
+- Centralized Error Handling
 
 ### 📊 Observability
 
-- Structured JSON logging with Uber Zap
+- Structured JSON Logging
 - Unique Request IDs
-- Request tracing
-- Error monitoring
+- Request Tracking
+- Error Logging
+
+### 🎨 Responsive Frontend
+
+- Clean User Interface
+- Mobile Responsive Design
+- Dynamic API Integration
 
 ---
 
@@ -69,32 +113,36 @@ A production-ready full-stack web application built with **Go**, **Fiber**, **Po
 └── README.md
 ```
 
-### Layer Responsibilities
+## 🔄 Request Flow
 
-#### Handler Layer
-- HTTP request handling
-- Request validation
-- Response formatting
-
-#### Service Layer
-- Business logic
-- Age calculation
-- Validation rules
-
-#### Repository Layer
-- Database operations
-- Query execution
-- Data persistence
-
-#### SQLC Layer
-- Type-safe generated queries
-- Compile-time query validation
+```text
+Client Request
+      ↓
+Fiber Router
+      ↓
+Middleware
+(Request ID, Logging, Validation)
+      ↓
+Handler Layer
+      ↓
+Service Layer
+(Age Calculation Logic)
+      ↓
+Repository Layer
+      ↓
+SQLC Generated Queries
+      ↓
+PostgreSQL Database
+      ↓
+JSON Response
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
 ### Backend
+
 - Go 1.22+
 - Fiber
 - PostgreSQL
@@ -103,42 +151,25 @@ A production-ready full-stack web application built with **Go**, **Fiber**, **Po
 - Validator
 
 ### Frontend
+
 - HTML
 - CSS
 - JavaScript
 
 ### DevOps & Cloud
+
 - Docker
 - Google Cloud Run
 - GitHub
 
 ---
 
-## 🗄️ Database Schema
-
-```sql
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    name TEXT NOT NULL,
-    dob DATE NOT NULL
-);
-```
-
----
-
 ## 🚀 Getting Started
-
-### Prerequisites
-
-- Go 1.22+
-- PostgreSQL
-- Git
 
 ### Clone Repository
 
 ```bash
 git clone https://github.com/Maheshdindur/Age-Calculator.git
-
 cd Age-Calculator
 ```
 
@@ -150,8 +181,6 @@ go mod tidy
 
 ### Configure Environment Variables
 
-Create a `.env` file:
-
 ```env
 DATABASE_URL=postgres://username:password@localhost:5432/user_db?sslmode=disable
 SERVER_PORT=3000
@@ -161,12 +190,6 @@ SERVER_PORT=3000
 
 ```bash
 go run cmd/server/main.go
-```
-
-Open:
-
-```text
-http://localhost:3000
 ```
 
 ---
@@ -191,18 +214,14 @@ https://age-calculator-703761824443.us-central1.run.app/
 
 ---
 
-## 📚 Key Learnings
+## 🚀 Future Improvements
 
-- REST API Development
-- Clean Architecture
-- PostgreSQL Integration
-- SQLC Query Generation
-- Middleware Design
-- Structured Logging
-- Docker Containerization
-- Cloud Deployment
-- Input Validation
-- Production Backend Practices
+- JWT Authentication
+- Role-Based Access Control (RBAC)
+- Swagger Documentation
+- Redis Caching
+- CI/CD with GitHub Actions
+- Kubernetes Deployment
 
 ---
 
@@ -211,8 +230,6 @@ https://age-calculator-703761824443.us-central1.run.app/
 **Mahesh Dindur**
 
 GitHub: https://github.com/Maheshdindur
-
-LinkedIn: https://linkedin.com/in/mahesh-dindur
 
 ---
 
