@@ -1,93 +1,219 @@
-# 🎂 Age Calculator API & Frontend 🚀
+# 🎂 Age Calculator - Production Ready Full Stack Go Application
 
-A professional, full-stack User Management system built with **Go** that calculates precise human age in **Years, Months, and Days**. This project demonstrates clean architecture, database safety, and a responsive user interface.
+A production-ready full-stack web application built with **Go**, **Fiber**, **PostgreSQL**, and **SQLC** that calculates a person's exact age in **Years, Months, and Days** while demonstrating modern backend engineering practices such as clean architecture, request tracing, structured logging, validation, and secure database operations.
 
----
+## 🌐 Live Demo
 
-## 🛠️ Features
-- **Accurate Age Logic**: Dynamically calculates age down to the day, handling varying month lengths and leap years.
-- **Full CRUD**: Create, Read, Update, and Delete users through a modern web UI.
-- **Data Integrity**: Prevents future dates from being stored and validates all inputs.
-- **Observability**: Structured JSON logging (Uber Zap) and unique Request IDs for every transaction.
-- **Secure**: Uses parameterized SQL queries to prevent SQL Injection attacks.
+**Application:** https://age-calculator-703761824443.us-central1.run.app/
+
+**Source Code:** https://github.com/Maheshdindur/Age-Calculator
 
 ---
 
-## 🏗️ Project Architecture
-The project follows a **Layered (Clean) Architecture** to ensure maintainability:
-- **`cmd/server/`**: Application entry point and dependency injection.
-- **`internal/handler/`**: HTTP layer (GoFiber) – handles requests and responses.
-- **`internal/service/`**: Business logic layer – handles the complex age calculations.
-- **`internal/repository/`**: Data access layer – communicates with PostgreSQL.
-- **`db/sqlc/`**: Type-safe database code generated from raw SQL.
-- **`public/`**: Frontend assets (HTML/CSS/JS).
+## ✨ Features
+
+### 🎯 Accurate Age Calculation
+
+- Calculates age precisely in Years, Months, and Days
+- Handles leap years
+- Handles varying month lengths
+- Prevents future dates
+- Validates user input
+
+### 👤 User Management (CRUD)
+
+- Create users
+- View saved calculations
+- Update user information
+- Delete users
+
+### 🔒 Secure Backend
+
+- Parameterized SQL queries
+- SQL injection protection
+- Input validation
+- Centralized error handling
+
+### 📊 Observability
+
+- Structured JSON logging with Uber Zap
+- Unique Request IDs
+- Request tracing
+- Error monitoring
+
+---
+
+## 🏗️ Architecture
+
+```text
+├── cmd
+│   └── server
+│       └── main.go
+│
+├── internal
+│   ├── handler
+│   ├── service
+│   ├── repository
+│   ├── middleware
+│   └── logger
+│
+├── db
+│   ├── migrations
+│   ├── query
+│   └── sqlc
+│
+├── public
+│
+├── Dockerfile
+├── docker-compose.yml
+└── README.md
+```
+
+### Layer Responsibilities
+
+#### Handler Layer
+- HTTP request handling
+- Request validation
+- Response formatting
+
+#### Service Layer
+- Business logic
+- Age calculation
+- Validation rules
+
+#### Repository Layer
+- Database operations
+- Query execution
+- Data persistence
+
+#### SQLC Layer
+- Type-safe generated queries
+- Compile-time query validation
+
+---
+
+## 🛠️ Tech Stack
+
+### Backend
+- Go 1.22+
+- Fiber
+- PostgreSQL
+- SQLC
+- Uber Zap
+- Validator
+
+### Frontend
+- HTML
+- CSS
+- JavaScript
+
+### DevOps & Cloud
+- Docker
+- Google Cloud Run
+- GitHub
+
+---
+
+## 🗄️ Database Schema
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    dob DATE NOT NULL
+);
+```
 
 ---
 
 ## 🚀 Getting Started
 
-### 1. Prerequisites
-- **Go** (v1.22 or higher)
-- **PostgreSQL** (Running locally or in the cloud)
-- **Git**
+### Prerequisites
 
-### 2. Database Setup
-1. Create a database named `user_db` in your PostgreSQL instance.
-2. Run the migration script to create the `users` table:
-   ```sql
-   -- Path: db/migrations/000001_create_users_table.up.sql
-   CREATE TABLE users (
-       id SERIAL PRIMARY KEY,
-       name TEXT NOT NULL,
-       dob DATE NOT NULL
-   );
-   ```
+- Go 1.22+
+- PostgreSQL
+- Git
 
-### 3. Installation & Configuration
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/Maheshdindur/Age-Calculator.git
-   cd Age-Calculator
-   ```
-2. **Install dependencies**:
-   ```bash
-   go mod tidy
-   ```
-3. **Set up Environment Variables**:
-   Create a `.env` file in the root directory:
-   ```env
-   DATABASE_URL=postgres://your_username:your_password@localhost:5432/user_db?sslmode=disable
-   SERVER_PORT=3000
-   ```
+### Clone Repository
 
-### 4. Running the Application
-Start the server:
+```bash
+git clone https://github.com/Maheshdindur/Age-Calculator.git
+
+cd Age-Calculator
+```
+
+### Install Dependencies
+
+```bash
+go mod tidy
+```
+
+### Configure Environment Variables
+
+Create a `.env` file:
+
+```env
+DATABASE_URL=postgres://username:password@localhost:5432/user_db?sslmode=disable
+SERVER_PORT=3000
+```
+
+### Run Application
+
 ```bash
 go run cmd/server/main.go
 ```
-Open your browser to: **[http://localhost:3000](http://localhost:3000)**
+
+Open:
+
+```text
+http://localhost:3000
+```
 
 ---
 
-## 🧪 API Endpoints
+## 📡 API Endpoints
 
 | Method | Endpoint | Description |
-| --- | --- | --- |
-| `POST` | `/users` | Create a user & calculate age |
-| `GET` | `/users/:id` | Get specific user details |
-| `PUT` | `/users/:id` | Update user details |
-| `DELETE` | `/users/:id` | Remove a user |
-| `GET` | `/users` | List all saved calculations |
+|----------|----------|-------------|
+| POST | /users | Create User |
+| GET | /users | Get All Users |
+| GET | /users/:id | Get User By ID |
+| PUT | /users/:id | Update User |
+| DELETE | /users/:id | Delete User |
 
 ---
 
-## 👨‍💻 Evaluation Highlights
-For the technical interview, focus on these three areas:
-1. **Service Layer Logic**: See `internal/service/user_service.go` for the detailed age calculation algorithm.
-2. **SQLC Integration**: Explain how we use code generation for type-safe database access.
-3. **Middleware Implementation**: Discuss how we use custom middleware for logging and request tracking.
+## ☁️ Deployment
+
+Deployed on Google Cloud Run:
+
+https://age-calculator-703761824443.us-central1.run.app/
 
 ---
 
-## 📦 Deployment (Optional)
-This app is ready for deployment on **Render** (Compute) and **Neon** (Database). A `Dockerfile` is included for containerized environments like **Google Cloud Run**.
+## 📚 Key Learnings
+
+- REST API Development
+- Clean Architecture
+- PostgreSQL Integration
+- SQLC Query Generation
+- Middleware Design
+- Structured Logging
+- Docker Containerization
+- Cloud Deployment
+- Input Validation
+- Production Backend Practices
+
+---
+
+## 👨‍💻 Author
+
+**Mahesh Dindur**
+
+GitHub: https://github.com/Maheshdindur
+
+LinkedIn: https://linkedin.com/in/mahesh-dindur
+
+---
+
+⭐ If you found this project useful, consider giving it a star.
