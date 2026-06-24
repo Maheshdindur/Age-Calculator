@@ -206,31 +206,5 @@ go run cmd/server/main.go
 
 ---
 
-## ☁️ Deployment
-
-Deployed on Google Cloud Run:
-
-https://age-calculator-703761824443.us-central1.run.app/
-
----
-
-## 🚀 Future Improvements
-
-- JWT Authentication
-- Role-Based Access Control (RBAC)
-- Swagger Documentation
-- Redis Caching
-- CI/CD with GitHub Actions
-- Kubernetes Deployment
-
----
-
-## 👨‍💻 Author
-
-**Mahesh Dindur**
-
-GitHub: https://github.com/Maheshdindur
-
----
-
-⭐ If you found this project useful, consider giving it a star.
+## 📦 Deployment 
+This app is deployed on **Google Cloud Platform**. Click on the link to calculate your age : **[https://age-calculator-703761824443.us-central1.run.app/](https://age-calculator-703761824443.us-central1.run.app/)**
